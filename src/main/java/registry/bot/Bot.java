@@ -24,18 +24,33 @@ public class Bot {
         long chatId = update.message().chat().id();
         Message message = update.message();
 
-        if(message.text().equals("/start")){
-            bot.execute(new SendMessage(chatId, "aoaoaoaooa"));
-        }
-        Keyboard replyKeyboardMarkup = new ReplyKeyboardMarkup(
-                new String[]{"first row button1", "first row button2"},
-                new String[]{"second row button1", "second row button2"})
+        Keyboard registryKeyboardMarkup = new ReplyKeyboardMarkup(
+                new String[]{"register", "<- back"})
                 .oneTimeKeyboard(true)
                 .resizeKeyboard(true)
                 .selective(true);
 
-//        SendMessage sm = new SendMessage(chatId, "a");
-//        sm.replyMarkup(replyKeyboardMarkup);
+        Keyboard replyKeyboardMarkup = new ReplyKeyboardMarkup(
+                new String[]{"I want to be registred", "<- back"})
+                .oneTimeKeyboard(true)
+                .resizeKeyboard(true)
+                .selective(true);
+
+
+        if(message.text().equals("/start")){
+            SendMessage sn = new SendMessage(chatId, "mmmmm");
+            sn.replyMarkup(registryKeyboardMarkup);
+            bot.execute(sn);
+        }
+
+
+
+
+        if(update.message().text().equals("register")){
+            SendMessage sm = new SendMessage(chatId, "ooooooooooo");
+            sm.replyMarkup(replyKeyboardMarkup);
+            bot.execute(sm);
+        }
 
         bot.execute(new SendMessage(chatId, "Hello!"));
     }
