@@ -24,34 +24,30 @@ public class Bot {
         long chatId = update.message().chat().id();
         Message message = update.message();
 
-        Keyboard registryKeyboardMarkup = new ReplyKeyboardMarkup(
-                new String[]{"register", "<- back"})
-                .oneTimeKeyboard(true)
-                .resizeKeyboard(true)
-                .selective(true);
-
-        Keyboard replyKeyboardMarkup = new ReplyKeyboardMarkup(
-                new String[]{"I want to be registred", "<- back"})
-                .oneTimeKeyboard(true)
-                .resizeKeyboard(true)
-                .selective(true);
-
+        KeyboardMarkupBlank mainKeyboardMarkup =
+                new KeyboardMarkupBlank(new String[]{"register📠", "documents📃"});
+        KeyboardMarkupBlank registerKeyboardMarkup =
+                new KeyboardMarkupBlank(new String[]{"register✅", "call off❌", "<- back"});
+        KeyboardMarkupBlank registerDataKeyboardMarkup =
+                new KeyboardMarkupBlank(new String[]{"choose date", "<- back to menu"});
 
         if(message.text().equals("/start")){
-            SendMessage sn = new SendMessage(chatId, "mmmmm");
-            sn.replyMarkup(registryKeyboardMarkup);
-            bot.execute(sn);
+            mainKeyboardMarkup.execute(bot, chatId);
+            System.out.println("all is right");
+        }
+        if(message.text().equals("register📠")){
+            registerKeyboardMarkup.execute(bot, chatId);
+        }
+        if(message.text().equals("<- back")){
+            mainKeyboardMarkup.execute(bot, chatId);
+        }
+        if(message.text().equals("register✅")){
+            registerDataKeyboardMarkup.execute(bot, chatId);
+        }
+        if(message.text().equals("<- back to menu")){
+            mainKeyboardMarkup.execute(bot, chatId);
         }
 
-
-
-
-        if(update.message().text().equals("register")){
-            SendMessage sm = new SendMessage(chatId, "ooooooooooo");
-            sm.replyMarkup(replyKeyboardMarkup);
-            bot.execute(sm);
-        }
-
-        bot.execute(new SendMessage(chatId, "Hello!"));
+        bot.execute(new SendMessage(chatId, "bot_is_active"));
     }
 }
